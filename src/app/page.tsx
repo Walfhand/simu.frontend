@@ -115,7 +115,7 @@ export default function Home() {
         </Card>
 
         {/* Right Card - Results */}
-        <Card className="col-span-8 h-full flex flex-col">
+        <Card className="col-span-8">
           <CardHeader>
             <CardTitle>Notre proposition</CardTitle>
             <div className="flex justify-between mt-2">
@@ -141,53 +141,47 @@ export default function Home() {
               </div>
             </div>
           </CardHeader>
-          <CardContent className="flex-1 p-0">
-            <div className="relative h-full">
-              <div className="overflow-hidden rounded-md border h-full flex flex-col">
-                <div className="relative">
-                  <Table>
-                    <TableHeader className="bg-background sticky top-0">
-                      <TableRow>
-                        <TableHead className="w-[140px]">Mois</TableHead>
-                        <TableHead>Mensualité</TableHead>
-                        <TableHead>Part d&apos;intérêts</TableHead>
-                        <TableHead>Part de capital</TableHead>
-                        <TableHead>Solde restant dû</TableHead>
+          <CardContent>
+            <div className="border rounded-md">
+              <div className="max-h-[500px] overflow-auto">
+                <Table>
+                  <TableHeader className="sticky top-0 bg-background z-10">
+                    <TableRow>
+                      <TableHead className="w-[140px]">Mois</TableHead>
+                      <TableHead>Mensualité</TableHead>
+                      <TableHead>Part d'intérêts</TableHead>
+                      <TableHead>Part de capital</TableHead>
+                      <TableHead>Solde restant dû</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {simulationResult?.depreciationTableLines.map((line) => (
+                      <TableRow key={line.month}>
+                        <TableCell className="w-[140px]">
+                          {line.month}
+                        </TableCell>
+                        <TableCell>
+                          {formatCurrency(line.monthlyAmount)}
+                        </TableCell>
+                        <TableCell>
+                          {formatCurrency(line.interestShare)}
+                        </TableCell>
+                        <TableCell>
+                          {formatCurrency(line.capitalShare)}
+                        </TableCell>
+                        <TableCell>
+                          {formatCurrency(line.remainingBalance)}
+                        </TableCell>
                       </TableRow>
-                    </TableHeader>
-                  </Table>
-                </div>
-                <div className="flex-1 overflow-auto">
-                  <Table>
-                    <TableBody>
-                      {simulationResult?.depreciationTableLines.map((line) => (
-                        <TableRow key={line.month}>
-                          <TableCell className="w-[140px]">
-                            {line.month}
-                          </TableCell>
-                          <TableCell>
-                            {formatCurrency(line.monthlyAmount)}
-                          </TableCell>
-                          <TableCell>
-                            {formatCurrency(line.interestShare)}
-                          </TableCell>
-                          <TableCell>
-                            {formatCurrency(line.capitalShare)}
-                          </TableCell>
-                          <TableCell>
-                            {formatCurrency(line.remainingBalance)}
-                          </TableCell>
-                        </TableRow>
-                      )) ?? (
-                        <TableRow>
-                          <TableCell colSpan={5} className="text-center">
-                            Aucune donnée disponible
-                          </TableCell>
-                        </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </div>
+                    )) ?? (
+                      <TableRow>
+                        <TableCell colSpan={5} className="text-center">
+                          Aucune donnée disponible
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
               </div>
             </div>
           </CardContent>
